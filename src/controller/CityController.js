@@ -1,7 +1,7 @@
 const fs = require('fs');
 const qs = require('qs');
 const url = require('url');
-const CityModel = require('../model/customer.model');
+const CityModel = require('../model/CityModel');
 
 class CityController{
 
@@ -42,7 +42,6 @@ class CityController{
     async showDetail(req, res) {
         let id = qs.parse(url.parse(req.url).query).id;
         let city = await this.citymodel.getCityDetail(id);
-        console.log(city);
         fs.readFile('./templates/detailcity.html', 'utf8', function (err, datahtml) {
             if (err) {
                 console.log(err);
@@ -104,7 +103,6 @@ class CityController{
         req.on('end',async () => {
             let dataForm = qs.parse(data);
             await this.citymodel.updateCity(dataForm,id);
-            console.log(dataForm);
             res.writeHead(301,{'Location':'/'})
             res.end();
         })
